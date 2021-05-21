@@ -1,9 +1,3 @@
-# Pre requisite to build and test projects
-
-## Pull from master and create feature branch
-- Create a local branch while tracking master branch
-  - Example:
-    - ``git checkout --track -b prefix/TICKET-JIRA-description origin/master``
 
 ## Windows installation
 
@@ -40,12 +34,7 @@
       - ``run.cmd build-web ``: build angular maven project
     - **Test**
       - ``run.cmd profile=dev test ``: run maven projects tests
-    - **Package**
-      - ``run.cmd profile=dev package ``: package all maven projects, generates jar files for all projects/
-    - **Deploy**
-      - ``run.cmd setup ``: deploy all projects with docker
-      - ``run.cmd kill ``: shutdown docker cluster
-
+  
 ### Profiles
 
 - Three profiles are created:
@@ -80,19 +69,16 @@
 - All of the following services can be built individually or combined but the following naming must be respected:
   - mysql database: **db**
   - api_gateway: **api-gateway**
-  - ms_material: **material**
   - ms_auth: **auth**
   - ms_persona: **persona**
   - ms_skill: **skill**
-  - ms_stock: **stock**
-  - ms_magasin: **store**
+  
 
 #### Examples  
 - For an **initial** setup, make sure you stop all running containers then run the necessary containers  (for example: db, api-gateway and auth):
     - ``run.cmd kill ``
     - ``run.cmd profile=dev db api-gateway auth ``
-- For **specific services** setup, if you want to **only** build **material and persona**, it is not necessary to kill all services before running a specific service.
-    - ``run.cmd profile=dev material persona``
+
 
 
 
