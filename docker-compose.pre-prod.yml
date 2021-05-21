@@ -1,0 +1,15 @@
+##YAML Template.
+version: '3'
+services:
+  flyway-ms_material:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=material -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+  flyway-ms_store:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=magasin -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+  flyway-ms_persona:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=persona -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+  flyway-ms_stock:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=stock -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+  flyway-ms_skill:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=skill -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+  flyway-ms_company:
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=company -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"

@@ -1,0 +1,319 @@
+<h2>Assigner les compétences</h2>
+<div>
+  <div >
+    <!----
+      PANEL THAT DISPLAY BOTH TABLES AND SELECTED RESULTS
+      ---->
+    <p-panel [showHeader]="false">
+      <!----
+      TABVIEW THAT SHOW : ALL/HABILITATION/SAVOIR-ETRE/SAVOIR FAIRE
+      ---->
+      <p-tabView>
+        <!----
+        SHOW ALL SKILLS
+        ---->
+        <p-tabPanel header="Tout">
+          <p-table
+            #dt1
+            [value]="skill"
+            [scrollable]="true"
+            scrollHeight="200px"
+            [style]="{ 'font-family': 'calibri' }"
+            [globalFilterFields]="[
+              'id',
+              'name',
+              'type',
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                  <em class="pi pi-search"></em>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Rechercher"
+                  />
+                </span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="name" pSortableColumn="name">
+                  Nom
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th id="type" pSortableColumn="type">
+                  Type
+                  <p-sortIcon field="type"></p-sortIcon>
+                </th>
+                <th id="selection">Sélectionnées</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-skill>
+              <tr>
+                <td
+                  pTooltip="{{
+                    skill.description ? skill.description : 'Pas de description'
+                  }}"
+                >
+                  {{ skill.name }}
+                </td>
+                <td
+                  pTooltip="{{
+                    skill.description ? skill.description : 'Pas de description'
+                  }}"
+                >
+                  {{ skill.type }}
+                </td>
+                <td>
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="selectedValues"
+                    (onChange)="assignSkills($event, skill)"
+                    [value]="skill"
+                  ></p-checkbox>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <!----
+        SHOW ALL HABILITATION
+        ---->
+        <p-tabPanel header="Habilitation">
+          <p-table
+            #dt2
+            [value]="skill"
+            [scrollable]="true"
+            scrollHeight="200px"
+            [style]="{ 'font-family': 'calibri' }"
+            [globalFilterFields]="[
+              'id',
+              'name',
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                  <em class="pi pi-search"></em>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Rechercher"
+                  />
+                </span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="name" pSortableColumn="name">
+                  Nom
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th id="selection">Sélectionnées</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-skill>
+              <tr *ngIf="skill?.type === 'HABILITATION'">
+                <td
+                  pTooltip="{{
+                    skill.description ? skill.description : 'Pas de description'
+                  }}"
+                >
+                  {{ skill.name }}
+                </td>
+                <td>
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="selectedValues"
+                    (onChange)="assignSkills($event, skill)"
+                    [value]="skill"
+                  ></p-checkbox>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <!----
+        SHOW ALL SAVOIR FAIRE
+        ---->
+        <p-tabPanel header="Savoir-faire">
+          <p-table
+            #dt3
+            [value]="skill"
+            [scrollable]="true"
+            scrollHeight="200px"
+            [style]="{ 'font-family': 'calibri' }"
+            [globalFilterFields]="[
+              'id',
+              'name',
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                  <em class="pi pi-search"></em>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt3.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Rechercher"
+                  />
+                </span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="name" pSortableColumn="name">
+                  Nom
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th id="selection">Sélectionnées</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-skill>
+              <tr *ngIf="skill?.type === 'SAVOIR_FAIRE'">
+                <td
+                  pTooltip="{{
+                    skill.description ? skill.description : 'Pas de description'
+                  }}"
+                >
+                  {{ skill.name }}
+                </td>
+                <td>
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="selectedValues"
+                    (onChange)="assignSkills($event, skill)"
+                    [value]="skill"
+                  ></p-checkbox>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <!----
+        SHOW ALL SAVOIR ETRE
+        ---->
+        <p-tabPanel header="Savoir-être">
+          <p-table
+            #dt4
+            [value]="skill"
+            [scrollable]="true"
+            scrollHeight="200px"
+            [style]="{ 'font-family': 'calibri' }"
+            [globalFilterFields]="[
+              'id',
+              'name',
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                  <em class="pi pi-search"></em>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt4.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Rechercher"
+                  />
+                </span>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="name" pSortableColumn="name">
+                  Nom
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th id="selection">Sélectionnées</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-skill>
+              <tr *ngIf="skill?.type === 'SAVOIR_ETRE'">
+                <td
+                  pTooltip="{{
+                    skill.description ? skill.description : 'Pas de description'
+                  }}"
+                >
+                  {{ skill.name }}
+                </td>
+                <td>
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="selectedValues"
+                    (onChange)="assignSkills($event, skill)"
+                    [value]="skill"
+                  ></p-checkbox>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+      </p-tabView>
+
+      <!----
+      DISPLAY SELECTED SKILLS FROM TAB
+      ---->
+      <ng-template pTemplate="footer">
+        <h3>Compétences sélectionnées</h3>
+        <div *ngFor="let skill of selectedValues; let i = index">
+          <div class="p-field p-grid p-ai-center vertical-container  p-m-2">
+            <span class="p-col-12 p-md-3"
+              ><p-chip
+                label="{{ skill.name }}"
+                (onRemove)="removeSkill($event, skill)"
+                [removable]="true"
+              ></p-chip
+            ></span>
+            <span
+              class="p-grid p-col-12 p-md-8"
+              *ngIf="skill?.type === 'HABILITATION' && skill?.validity"
+            >
+              <span class="p-col-12 p-md-6">
+
+                <p-calendar
+                  dateFormat="dd.mm.yy"
+                  [(ngModel)]="assignedSkills[i].startDate"
+                ></p-calendar>
+              </span>
+              <span class="p-col-12 p-md-6">
+
+                <p-calendar
+                  dateFormat="dd.mm.yy"
+                  [(ngModel)]="assignedSkills[i].endDate"
+                ></p-calendar>
+              </span>
+            </span>
+          </div>
+        </div>
+      </ng-template>
+    </p-panel>
+  </div>
+</div>
+<p-sidebar
+  class="p-text-right"
+  [style]="{ height: '10%' }"
+  [visible]="true"
+  [blockScroll]="true"
+  [dismissible]="false"
+  [showCloseIcon]="false"
+  [modal]="false"
+  position="bottom"
+>
+
+  <p-button
+    (onClick)="prevPage()"
+    styleClass="p-button-outlined p-mr-2"
+    label="Retour"
+  ></p-button>
+
+  <p-button (onClick)="save()" styleClass="p-mr-2" label="Valider"></p-button>
+</p-sidebar>

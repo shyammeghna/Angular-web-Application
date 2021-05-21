@@ -1,0 +1,99 @@
+##YAML Template.
+version: '3'
+services:
+  apigateway:
+    build:
+      context: ./api_gateway
+
+  auth:
+    build:
+      context: ./ms_auth
+
+  web:
+    build:
+      context: ./ihm/
+
+  material:
+    build:
+      context: ./ms_material
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  persona:
+    build:
+      context: ./ms_persona
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  store:
+    build:
+      context: ./ms_magasin
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  stock:
+    build:
+      context: ./ms_stock
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  skill:
+    build:
+      context: ./ms_skill
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  company:
+    build:
+      context: ./ms_company
+    environment:
+      - WAIT_HOSTS=192.168.100.49:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  flyway-ms_material:
+    build:
+      context: ./ms_material/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=material -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_store:
+    build:
+      context: ./ms_magasin/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=magasin -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_persona:
+    build:
+      context: ./ms_persona/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=persona -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_stock:
+    build:
+      context: ./ms_stock/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=stock -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_skill:
+    build:
+      context: ./ms_skill/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=skill -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+
+  flyway-ms_company:
+    build:
+      context: ./ms_company/script_sql
+    command: "flyway -url=jdbc:mysql://192.168.100.49?useUnicode=true&characterEncoding=UTF-8 -schemas=company -user=phoenix -password=hA1vXkY9TxBBAf7t6w5a -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"

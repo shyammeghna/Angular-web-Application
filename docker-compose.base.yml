@@ -1,0 +1,98 @@
+## YAML Template.
+version: '3'
+services:
+  apigateway:
+    image: ${CI_REGISTRY}/root/phoenix/api_gateway:latest
+    ports:
+        - 8858:8858
+    expose:
+      - 8858
+
+  auth:
+    image: ${CI_REGISTRY}/root/phoenix/auth:latest
+    ports:
+        - 8281:8281
+    expose:
+      - 8281
+    command: sh -c "java -Djava.security.egd=file:/dev/./urandom -jar /ms_auth.jar"
+
+  web:
+    image: ${CI_REGISTRY}/root/phoenix/web:latest
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    command: ["nginx", "-g", "daemon off;"]
+
+  material:
+    image: ${CI_REGISTRY}/root/phoenix/material:latest
+    ports:
+      - 8989:8989
+    expose:
+      - 8989
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_material.jar"
+
+  persona:
+    image: ${CI_REGISTRY}/root/phoenix/persona:latest
+    ports:
+        - 8987:8987
+    expose:
+      - 8987
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_persona.jar"
+
+  store:
+    image: ${CI_REGISTRY}/root/phoenix/store:latest
+    ports:
+        - 8988:8988
+    expose:
+      - 8988
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_magasin.jar"
+
+
+  stock:
+    image: ${CI_REGISTRY}/root/phoenix/stock:latest
+    ports:
+        - 8986:8986
+    expose:
+      - 8986
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_stock.jar"
+
+  skill:
+    image: ${CI_REGISTRY}/root/phoenix/skill:latest
+    ports:
+        - 8985:8985
+    expose:
+      - 8985
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_skill.jar"
+
+  company:
+    image: ${CI_REGISTRY}/root/phoenix/company:latest
+    ports:
+      - 8990:8990
+    expose:
+      - 8990
+    command: sh -c "/wait && java -Djava.security.egd=file:/dev/./urandom -jar /ms_company.jar"
+
+  flyway-ms_material:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_material:latest
+    entrypoint: ['bash']
+
+  flyway-ms_store:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_store:latest
+    entrypoint: ['bash']
+
+  flyway-ms_persona:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_persona:latest
+    entrypoint: ['bash']
+
+  flyway-ms_stock:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_stock:latest
+    entrypoint: ['bash']
+
+  flyway-ms_skill:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_skill:latest
+    entrypoint: [ 'bash' ]
+
+  flyway-ms_company:
+    image: ${CI_REGISTRY}/root/phoenix/flyway-ms_company:latest
+    entrypoint: [ 'bash' ]

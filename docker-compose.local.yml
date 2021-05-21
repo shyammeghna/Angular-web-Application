@@ -1,0 +1,137 @@
+## YAML Template.
+version: '3'
+services:
+  db:
+    image: mysql:5.7.33
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    healthcheck:
+      test: mysqladmin ping -h db -u root --password=root
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  apigateway:
+    build:
+      context: ./api_gateway
+
+  auth:
+    build:
+      context: ./ms_auth
+
+  web:
+    build:
+      context: ./ihm/
+
+  material:
+    build:
+      context: ./ms_material
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  persona:
+    build:
+      context: ./ms_persona
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  store:
+    build:
+      context: ./ms_magasin
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  stock:
+    build:
+      context: ./ms_stock
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  skill:
+    build:
+      context: ./ms_skill
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  company:
+    build:
+     context: ./ms_company
+    depends_on:
+    - db
+    environment:
+    - WAIT_HOSTS=db:3306
+    - WAIT_HOSTS_TIMEOUT=300
+    - WAIT_SLEEP_INTERVAL=30
+    - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  flyway-ms_material:
+    build:
+      context: ./ms_material/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=material -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_store:
+    build:
+      context: ./ms_magasin/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=magasin -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_persona:
+    build:
+      context: ./ms_persona/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=persona -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_stock:
+    build:
+      context: ./ms_stock/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=stock -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate "
+
+  flyway-ms_skill:
+    build:
+      context: ./ms_skill/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=skill -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"
+
+  flyway-ms_company:
+    build:
+      context: ./ms_company/script_sql
+    depends_on:
+      - db
+    command: "flyway -url=jdbc:mysql://db?useUnicode=true&characterEncoding=UTF-8 -schemas=company -user=root -password=root -connectRetries=60 -locations=filesystem:/flyway/sql/ migrate"

@@ -1,0 +1,18 @@
+## YAML Template.
+version: '3'
+services:
+  apigateway:
+  material:
+  persona:
+  store:
+  stock:
+  skill:
+  company:
+  auth:
+  web:
+  flyway-ms_material:
+  flyway-ms_store:
+  flyway-ms_persona:
+  flyway-ms_stock:
+  flyway-ms_skill:
+  flyway-ms_company:

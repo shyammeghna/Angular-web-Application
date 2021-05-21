@@ -1,0 +1,79 @@
+<app-kober-menu></app-kober-menu>
+<div class="p-d-flex p-jc-center p-m-2 p-p-2 main-page">
+  <div class="p-grid p-ai-center vertical-container p-jc-center">
+      <app-kober-competences></app-kober-competences>
+      <div class="p-col-12 p-md-10 p-jc-center p-m-3 p-p-3 main-content p-shadow-4">
+      <h2>Personas</h2>
+      <p-table #dt1 [value]="persona" [responsive]="true" class ="table" [scrollable]="true" scrollHeight="30vh"
+        [paginator]="true" [rows]="10" styleClass="p-datatable-gridlines p-mb-5" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Affichage de {first} à {last} entrées sur {totalRecords}"
+        [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="[
+    'id',
+    'firstName',
+    'lastName',
+    'publicName',
+    'mail',
+    'personalNumber'
+  ]">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <span class="p-input-icon-left p-ml-auto">
+              <em class="pi pi-search p-m-2"></em>
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Rechercher" />
+            </span>
+          </div>
+          <p-button (click)="onPress()">{{display}}</p-button>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th id="lastName" pSortableColumn="lastName">
+              Nom
+              <p-sortIcon field="lastName"></p-sortIcon>
+            </th>
+            <th id="firstName" pSortableColumn="firstName">
+              Prénom
+              <p-sortIcon field="firstName"></p-sortIcon>
+            </th>
+            <th id="publicName" pSortableColumn="publicName">
+              Nom public
+              <p-sortIcon field="publicName"></p-sortIcon>
+            </th>
+            <th id="mail" pSortableColumn="mail" >
+              Email
+              <p-sortIcon field="mail"></p-sortIcon>
+            </th>
+            <th id="personalNumber" pSortableColumn="personalNumber">
+              N° personnel
+              <p-sortIcon field="personalNumber"></p-sortIcon>
+            </th>
+            <th id="actions"   class="p-text-center"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-persona let-ri="rowIndex">
+          <tr>
+            <td><a href="/phoenix/show-persona/{{ persona.id }}">
+                {{persona.firstName }}</a></td>
+            <td>{{ persona.lastName }}</td>
+            <td>{{ persona.publicName }}</td>
+            <td>{{ persona.mail }}</td>
+            <td>{{ persona.personalNumber }}</td>
+            <td>
+
+              <!-- Qr code generator -->
+              <p-dialog header="QR code du persona" [(visible)]="displays">
+                <div *ngIf='datas[getRi()]'>
+                  <qrcode [qrdata]='datas[getRi()]' [size]="256" [level]="'L'" usesvg="true"></qrcode>
+                </div>
+              </p-dialog>
+              <p-button type="button" (click)="showDialog(ri)" icon="pi pi-info-circle" label="QRcode"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div class="p-grid p-jc-end">
+        <button class="p-mr-5 p-mt-5" pButton routerLink="/phoenix/new-persona" type="button" label="Créer"></button>
+      </div>
+    </div>
+  </div>
+</div>
