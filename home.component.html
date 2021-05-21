@@ -1,0 +1,36 @@
+
+<div class="body p-grid p-ai-center vertical-container p-nogutter">
+    <div class="p-col p-nogutter">
+        <div class="p-d-flex p-jc-center">
+            <a href="/phoenix/store">
+                <div class="p-shadow-2 block materiel"></div>
+            </a>
+        </div>
+    </div>
+    <div class="p-col p-nogutter">
+        <div class="p-d-flex p-jc-center">
+            <a href="/phoenix/persona">
+                <div class="p-shadow-2 block competence"></div>
+            </a>
+        </div>
+    </div>
+</div>
+<p-sidebar
+    [style]="{'background-color':'transparent', 'height':'10vh', 'border':'none'}"
+    [visible]="true"
+    position="bottom"
+    [blockScroll]="true"
+    [dismissible]="false"
+    [showCloseIcon]="false"
+    [modal]="false"
+>
+    <div class="p-d-flex p-jc-center">
+        <div (click)="logout()" class="p-grid p-ai-center vertical-container logout">
+            
+                <div class="p-col p-text-center">
+                    <i class="pi pi-sign-out"></i>
+                    Déconnexion
+                </div>
+        </div>
+    </div>
+</p-sidebar>

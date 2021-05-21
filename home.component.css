@@ -1,0 +1,40 @@
+.body{
+    background-color: #080808;
+    opacity: 87%;
+    height : 100vh;
+    margin : 0;
+    padding: 0;
+    /*background-color: #F5F6F8;*/
+}
+
+.block{
+    height: 50vh;
+    width : 50vh;
+    border-radius: 60px;
+}
+
+.materiel{
+    background-image: url('../../assets/logo/kober_materiel.png');
+    background-size: contain;
+}
+
+.competence{
+    background-image: url('../../assets/logo/kober_competence.png');
+    background-size: contain;
+}
+
+.logout{
+    background-color:#692C2C;
+    height:10vh;
+    width : 20vw;
+    border-top-left-radius: 200px;
+    border-top-right-radius: 200px;
+    color : white;
+    font-family: 'calibri';
+    letter-spacing: .1rem;
+    font-size: 1.2em;
+}
+
+.logout:hover{
+    cursor: grab;
+}
